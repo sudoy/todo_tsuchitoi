@@ -1,54 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-		<title>Bootstrap 101 Template</title>
-
-		<!-- Bootstrap -->
-		<link href="css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="css_cm/style.css">
-
-		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-		<!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
+		<jsp:include page="header.jsp" />
+		<title>entry</title>
 	</head>
-	<body>
-		<div class="container-fluid" style="background-color: white;">
-			<div class="row">
-				<div class="col-sm-offset-1">
-					<a href="index.html"><h1><small>Todoリスト</small></h1></a>
-				</div>
-			</div>
-		</div><!-- /container -->
+	<body style="background-color: #f9f8f8;">
+
+		<jsp:include page="bar.jsp" />
+
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-sm-offset-1 col-sm-10">
-					<div class="alert alert-success alert-dismissible fade in" role="alert"  style="margin-top: 21px;">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-						<h4>完了しました！</h4>
-						<ul>
-							<li>No.27のリストを更新しました。</li>
-						</ul>
-					</div>
-					<div class="alert alert-danger alert-dismissible fade in" role="alert">
-						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-						<h4>エラーが発生しました！</h4>
-						<ul>
-							<li>題名は必須入力です。</li>
-						</ul>
-					</div>
-				</div>
-			</div><!-- row -->
+
+			<jsp:include page="error.jsp" />
+
 			<div class="row">
 				<div class="col-sm-offset-1 col-sm-10" style="border-bottom: solid 1px #80808075; margin-bottom: 13px;">
 					<strong>登録フォーム</strong>
@@ -98,17 +63,12 @@
 								<button type="submit" name="add" class="btn btn-primary">追 加</button>
 							</div>
 						</div><!-- form-group -->
-
-						</div>
 					</form>
 				</div>
 			</div><!-- row -->
+		</div><!-- container -->
 
+		<jsp:include page="footer.jsp" />
 
-
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="js/bootstrap.min.js"></script>
 	</body>
 </html>
