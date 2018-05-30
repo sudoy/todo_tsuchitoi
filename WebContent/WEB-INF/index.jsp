@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*, javax.naming.*, javax.sql.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<% ResultSet rs = (ResultSet) request.getAttribute("rs");%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -25,24 +30,34 @@
 							<th>重要度</th>
 							<th>期限</th>
 						</tr>
+<%
+	while(rs.next()){
+%>
 						<tr>
 							<td>1</td>
-							<td><a href="update.html">テストテキスト</a></td>
-							<td>★★★</td>
-							<td>2015/06/20</td>
+							<td><a href="update.html?id=<%= rs.getInt("id") %>"><%= rs.getString("title") %></a></td>
+							<td>
+								<%
+									for(int i = 1; i <= rs.getInt("importance"); i++){
+								%>
+									★
+								<%
+									}
+								%>
+							</td>
+							<td>
+								<%
+									if(rs.getDate("limit_date") != null){
+								%>
+								<%= rs.getDate("limit_date") %>
+								<%
+									}else{}
+								%>
+							</td>
 						</tr>
-						<tr>
-							<td>2</td>
-							<td><a href="update.html">テストテキスト</a></td>
-							<td>★</td>
-							<td>2015/06/20</td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td><a href="update.html">テストテキスト</a></td>
-							<td>★★★</td>
-							<td>2015/06/20</td>
-						</tr>
+<%
+	}
+%>
 					</table>
 				</div>
 			</div><!-- row -->

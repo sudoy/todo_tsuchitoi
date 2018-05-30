@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% 	request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
@@ -39,13 +40,13 @@
 							<div class="col-sm-10">
 								<div class="radio">
 									<label>
-										<input type="radio" name="primary" id="primary3" value="primary3" checked>★★★
+										<input type="radio" name="importance" id="importance3" value="3" checked>★★★
 									</label><br>
 									<label>
-										<input type="radio" name="primary" id="primary2" value="primary2">★★
+										<input type="radio" name="importance" id="importance2" value="2">★★
 									</label><br>
 									<label>
-										<input type="radio" name="primary" id="primary1" value="primary1">★
+										<input type="radio" name="importance" id="importance1" value="1">★
 									</label>
 								</div>
 							</div>
@@ -53,7 +54,7 @@
 						<div class="form-group">
 							<label for="limit" class="col-sm-2 control-label">期限</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="limit" name="limit" placeholder="期限">
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">

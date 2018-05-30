@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*, javax.naming.*, javax.sql.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	ResultSet rs = (ResultSet)request.getAttribute("rs");
+	request.setCharacterEncoding("utf-8");
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -20,40 +28,78 @@
 				</div>
 			</div><!-- row -->
 			<div class="row">
-				<div class="col-sm-offset-1 col-sm-10">
-					<form class="form-horizontal" action="update.html" method="post">
+					<div class="col-sm-offset-1 col-sm-10">
+					<form class="form-horizontal" action="update.html?id=<%= rs.getInt("id") %>" method="post">
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">題名</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="テストテスト">
+								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="<%= rs.getString("title") %>">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="detail" class="col-sm-2 control-label">詳細</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細">SQLの確認テストの採点と報告書を作成する。</textarea>
+								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細"><%= rs.getString("detail") %></textarea>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">重要度</label>
 							<div class="col-sm-10">
 								<div class="radio">
+<%
+	if(rs.getInt("importance") == 3){
+%>
 									<label>
-										<input type="radio" name="primary" id="primary3" value="primary3" checked>★★★
+										<input type="radio" name="importance" id="importance3" value="3" checked>★★★
 									</label><br>
 									<label>
-										<input type="radio" name="primary" id="primary2" value="primary2">★★
+										<input type="radio" name="importance" id="importance2" value="2">★★
 									</label><br>
 									<label>
-										<input type="radio" name="primary" id="primary1" value="primary1">★
+										<input type="radio" name="importance" id="importance1" value="1">★
 									</label>
+<%
+	}else if(rs.getInt("importance") == 2){
+%>
+									<label>
+										<input type="radio" name="importance" id="importance3" value="3">★★★
+									</label><br>
+									<label>
+										<input type="radio" name="importance" id="importance2" value="2" checked>★★
+									</label><br>
+									<label>
+										<input type="radio" name="importance" id="importance1" value="1">★
+									</label>
+<%
+	}else if(rs.getInt("importance") == 1){
+%>
+									<label>
+										<input type="radio" name="importance" id="importance3" value="3">★★★
+									</label><br>
+									<label>
+										<input type="radio" name="importance" id="importance2" value="2">★★
+									</label><br>
+									<label>
+										<input type="radio" name="importance" id="importance1" value="1" checked>★
+									</label>
+<%
+	}
+%>
 								</div>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="limit" class="col-sm-2 control-label">期限</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="limit" name="limit" placeholder="期限" value="2015/06/15">
+<%
+	if(rs.getDate("limit_date") != null){
+%>
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="<%=rs.getDate("limit_date") %>">
+<%
+	}else{
+%>
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="">
+<%}%>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
