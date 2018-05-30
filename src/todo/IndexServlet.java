@@ -26,7 +26,7 @@ public class IndexServlet extends HttpServlet {
 		try{
 			con = DBUtils.getConnection();
 
-			sql = "select * from todo order by id";
+			sql = "select id, title, detail, importance, limit_date from todo order by id";
 
 			ps = con.prepareStatement(sql);
 
@@ -43,13 +43,8 @@ public class IndexServlet extends HttpServlet {
 			try{
 
 				DBUtils.close(con);
-
-				if(ps != null){
-					ps.close();
-				}
-				if(rs != null){
-					rs.close();
-				}
+				DBUtils.close(ps);
+				DBUtils.close(rs);
 			}catch(Exception e){}
 		}
 	}

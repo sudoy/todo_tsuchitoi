@@ -31,32 +31,16 @@
 							<th>期限</th>
 						</tr>
 <%
-	while(rs.next()){
+						while(rs.next()){
 %>
-						<tr>
-							<td>1</td>
-							<td><a href="update.html?id=<%= rs.getInt("id") %>"><%= rs.getString("title") %></a></td>
-							<td>
-								<%
-									for(int i = 1; i <= rs.getInt("importance"); i++){
-								%>
-									★
-								<%
-									}
-								%>
-							</td>
-							<td>
-								<%
-									if(rs.getDate("limit_date") != null){
-								%>
-								<%= rs.getDate("limit_date") %>
-								<%
-									}else{}
-								%>
-							</td>
-						</tr>
+							<tr>
+								<td><%= rs.getInt("id") %></td>
+								<td><a href="update.html?id=<%= rs.getInt("id") %>"><%= rs.getString("title") %></a></td>
+								<td><%= rs.getInt("importance") %></td>
+								<td><%= rs.getDate("limit_date") %></td>
+							</tr>
 <%
-	}
+						}
 %>
 					</table>
 				</div>
