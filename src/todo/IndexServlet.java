@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import todo.utils.DBUtils;
+
 @WebServlet("/index.html")
 public class IndexServlet extends HttpServlet {
 	@Override
@@ -34,14 +36,13 @@ public class IndexServlet extends HttpServlet {
 
 			req.setAttribute("rs", rs);
 
-		getServletContext().getRequestDispatcher("/WEB-INF/index.jsp")
-			.forward(req, resp);
+			getServletContext().getRequestDispatcher("/WEB-INF/index.jsp")
+				.forward(req, resp);
 
 		}catch(Exception e){
 			throw new ServletException(e);
 		}finally{
 			try{
-
 				DBUtils.close(con);
 				DBUtils.close(ps);
 				DBUtils.close(rs);
