@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*, javax.naming.*, javax.sql.*" %>
+<%@ page import="todo.utils.HTMLUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -33,8 +33,8 @@
 							<tr>
 								<td>${t.index + 1}</td>
 								<td><a href="update.html?id=${todo.id}">${todo.title}</a></td>
-								<td>${todo.importance}</td>
-								<td>${todo.limitDate}</td>
+								<td>${HTMLUtils.importanceFormat(todo.importance)}</td>
+								<td>${HTMLUtils.dateFormat(todo.limitDate)}</td>
 							</tr>
 						</c:forEach>
 					</table>

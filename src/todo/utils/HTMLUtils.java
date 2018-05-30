@@ -15,12 +15,13 @@ public class HTMLUtils {
 
 	public static String dateFormat(Date limitDate) {
 
-
+		String s = "";
 		if(limitDate == null) {
 			return "";
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-		String s = sdf.format(limitDate);
+		s = sdf.format(limitDate);
+
 		return s;
 	}
 }

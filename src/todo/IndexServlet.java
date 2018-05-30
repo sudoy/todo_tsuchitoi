@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import todo.beans.Todo;
 import todo.utils.DBUtils;
-import todo.utils.HTMLUtils;
 
 @WebServlet("/index.html")
 public class IndexServlet extends HttpServlet {
@@ -42,12 +41,11 @@ public class IndexServlet extends HttpServlet {
 
 			while(rs.next()) {
 				Todo t = new Todo(rs.getInt("id"), rs.getString("title"),
-						rs.getString("detail"), HTMLUtils.importanceFormat(rs.getInt("importance")),
-						HTMLUtils.dateFormat(rs.getDate("limit_date"))
+						rs.getString("detail"), rs.getInt("importance"),
+						rs.getDate("limit_date")
 						);
 				list.add(t);
 			}
-
 			req.setAttribute("list", list);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/index.jsp")
