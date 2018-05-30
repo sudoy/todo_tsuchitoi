@@ -3,7 +3,6 @@
 <%@ page import="java.sql.*, javax.naming.*, javax.sql.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<% ResultSet rs = (ResultSet) request.getAttribute("rs");%>
 
 <!DOCTYPE html>
 <html>
@@ -30,18 +29,14 @@
 							<th>重要度</th>
 							<th>期限</th>
 						</tr>
-<%
-						while(rs.next()){
-%>
+						<c:forEach var="todo" items="${list}" varStatus="t">
 							<tr>
-								<td><%= rs.getInt("id") %></td>
-								<td><a href="update.html?id=<%= rs.getInt("id") %>"><%= rs.getString("title") %></a></td>
-								<td><%= rs.getInt("importance") %></td>
-								<td><%= rs.getDate("limit_date") %></td>
+								<td>${t.index + 1}</td>
+								<td><a href="update.html?id=${todo.id}">${todo.title}</a></td>
+								<td>${todo.importance}</td>
+								<td>${todo.limitDate}</td>
 							</tr>
-<%
-						}
-%>
+						</c:forEach>
 					</table>
 				</div>
 			</div><!-- row -->

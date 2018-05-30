@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import todo.beans.Todo;
 import todo.utils.DBUtils;
+import todo.utils.HTMLUtils;
 
 @WebServlet("/index.html")
 public class IndexServlet extends HttpServlet {
@@ -34,7 +38,17 @@ public class IndexServlet extends HttpServlet {
 
 			rs = ps.executeQuery();
 
-			req.setAttribute("rs", rs);
+			List<Todo> list = new ArrayList<Todo>();
+
+			while(rs.next()) {
+				Todo t = new Todo(rs.getInt("id"), rs.getString("title"),
+						rs.getString("detail"), HTMLUtils.importanceFormat(rs.getInt("importance")),
+						HTMLUtils.dateFormat(rs.getDate("limit_date"))
+						);
+				list.add(t);
+			}
+
+			req.setAttribute("list", list);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/index.jsp")
 				.forward(req, resp);
