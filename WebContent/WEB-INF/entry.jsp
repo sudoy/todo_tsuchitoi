@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 	request.setCharacterEncoding("utf-8"); %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ja">
 	<head>
@@ -26,35 +28,61 @@
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">題名</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="title" name="title" placeholder="題名">
+								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="${ef.title}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="detail" class="col-sm-2 control-label">詳細</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細"></textarea>
+								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細">${ef.detail}</textarea>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">重要度</label>
 							<div class="col-sm-10">
 								<div class="radio">
-									<label>
-										<input type="radio" name="importance" id="importance3" value="3" checked>★★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance2" value="2">★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance1" value="1">★
-									</label>
+									<c:choose>
+										<c:when test="${ef.importance == 2}">
+											<label>
+												<input type="radio" name="importance" id="importance3" value="3">★★★
+											</label><br>
+											<label>
+												<input type="radio" name="importance" id="importance2" value="2" checked>★★
+											</label><br>
+											<label>
+												<input type="radio" name="importance" id="importance1" value="1">★
+											</label>
+										</c:when>
+										<c:when test="${ef.importance == 1}">
+											<label>
+												<input type="radio" name="importance" id="importance3" value="3">★★★
+											</label><br>
+											<label>
+												<input type="radio" name="importance" id="importance2" value="2">★★
+											</label><br>
+											<label>
+												<input type="radio" name="importance" id="importance1" value="1" checked>★
+											</label>
+										</c:when>
+										<c:otherwise>
+											<label>
+												<input type="radio" name="importance" id="importance3" value="3" checked>★★★
+											</label><br>
+											<label>
+												<input type="radio" name="importance" id="importance2" value="2">★★
+											</label><br>
+											<label>
+												<input type="radio" name="importance" id="importance1" value="1">★
+											</label>
+										</c:otherwise>
+									</c:choose>
 								</div>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="limit" class="col-sm-2 control-label">期限</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限">
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="${ef.limitDate}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">

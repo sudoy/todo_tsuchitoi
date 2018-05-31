@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import todo.beans.EntryForm;
 import todo.utils.DBUtils;
 
 
@@ -24,9 +25,8 @@ public class EntryServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+		req.setCharacterEncoding("utf-8");
 		if(validate(req)) {
-			req.setCharacterEncoding("utf-8");
 			Connection con = null;
 			PreparedStatement ps = null;
 			String sql = null;
@@ -61,28 +61,42 @@ public class EntryServlet extends HttpServlet {
 
 			resp.sendRedirect("index.html");
 		}else {
-			resp.sendRedirect("entry.html");
+
+			req.setAttribute("error", "error");
+
+			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
+					Integer.parseInt(req.getParameter("importance")), req.getParameter("limit_date"));
+
+			req.setAttribute("ef", ef);
+
+			getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
+			.forward(req, resp);
 		}
 	}
 
 	public static boolean validate(HttpServletRequest req) {
+
 		boolean errorCheck = true;
 		int titleLength = req.getParameter("title").length();
 		if(req.getParameter("title").equals("")) {
 			errorCheck = false;
+			req.setAttribute("etn", "題名は必須入力です。");
 		}
 		if(titleLength > 100) {
 			errorCheck = false;
+			req.setAttribute("eto", "題名は100文字以内にして下さい。");
 		}
 		if(req.getParameter("importance").equals("1")
 				|| req.getParameter("importance").equals("2")
 				|| req.getParameter("importance").equals("3")) {
 		}else {
 			errorCheck = false;
+			req.setAttribute("ei", "重要度に不正な入力がされました。");
 		}
 		if((req.getParameter("limit_date").equals("") == false)) {
 			if((dateCheck(req) == false)) {
 				errorCheck = false;
+				req.setAttribute("ed", "期限は「YYYY/MM/DD」形式で入力して下さい。");
 			}
 		}
 
@@ -98,7 +112,6 @@ public class EntryServlet extends HttpServlet {
 		try {
 			parsedDate =  df.parse(value);
 			dateCheck = df.format(parsedDate).equals(value);
-
 		} catch (Exception e) {
 			dateCheck = false;
 		}

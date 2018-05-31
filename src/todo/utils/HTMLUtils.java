@@ -14,7 +14,6 @@ public class HTMLUtils {
 	}
 
 	public static String dateFormat(Date limitDate) {
-
 		String s = "";
 		if(limitDate == null) {
 			return "";
