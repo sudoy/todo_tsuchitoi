@@ -28,78 +28,64 @@
 				</div>
 			</div><!-- row -->
 			<div class="row">
-					<div class="col-sm-offset-1 col-sm-10">
-					<form class="form-horizontal" action="update.html?id=<%= rs.getInt("id") %>" method="post">
+				<div class="col-sm-offset-1 col-sm-10">
+					<form class="form-horizontal" action="update.html?id=${t.id}" method="post">
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">題名</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="<%= rs.getString("title") %>">
+								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="${t.title}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="detail" class="col-sm-2 control-label">詳細</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細"><%= rs.getString("detail") %></textarea>
+								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細">${t.detail}</textarea>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">重要度</label>
 							<div class="col-sm-10">
 								<div class="radio">
-<%
-	if(rs.getInt("importance") == 3){
-%>
-									<label>
-										<input type="radio" name="importance" id="importance3" value="3" checked>★★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance2" value="2">★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance1" value="1">★
-									</label>
-<%
-	}else if(rs.getInt("importance") == 2){
-%>
-									<label>
-										<input type="radio" name="importance" id="importance3" value="3">★★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance2" value="2" checked>★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance1" value="1">★
-									</label>
-<%
-	}else if(rs.getInt("importance") == 1){
-%>
-									<label>
-										<input type="radio" name="importance" id="importance3" value="3">★★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance2" value="2">★★
-									</label><br>
-									<label>
-										<input type="radio" name="importance" id="importance1" value="1" checked>★
-									</label>
-<%
-	}
-%>
+									<c:if test="${t.importance == 3}">
+										<label>
+											<input type="radio" name="importance" id="importance3" value="3" checked>★★★
+										</label><br>
+										<label>
+											<input type="radio" name="importance" id="importance2" value="2">★★
+										</label><br>
+										<label>
+											<input type="radio" name="importance" id="importance1" value="1">★
+										</label>
+									</c:if>
+									<c:if test="${t.importance == 2}">
+										<label>
+											<input type="radio" name="importance" id="importance3" value="3">★★★
+										</label><br>
+										<label>
+											<input type="radio" name="importance" id="importance2" value="2" checked>★★
+										</label><br>
+										<label>
+											<input type="radio" name="importance" id="importance1" value="1">★
+										</label>
+									</c:if>
+									<c:if test="${t.importance == 1}">
+										<label>
+											<input type="radio" name="importance" id="importance3" value="3">★★★
+										</label><br>
+										<label>
+											<input type="radio" name="importance" id="importance2" value="2">★★
+										</label><br>
+										<label>
+											<input type="radio" name="importance" id="importance1" value="1" checked>★
+										</label>
+									</c:if>
 								</div>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="limit" class="col-sm-2 control-label">期限</label>
 							<div class="col-sm-10">
-<%
-	if(rs.getDate("limit_date") != null){
-%>
-								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="<%=rs.getDate("limit_date") %>">
-<%
-	}else{
-%>
-								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="">
-<%}%>
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="${t.limitDate}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">

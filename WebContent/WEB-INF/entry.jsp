@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 	request.setCharacterEncoding("utf-8"); %>
+<%@ page import="todo.utils.HTMLUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -41,41 +42,15 @@
 							<label for="title" class="col-sm-2 control-label">重要度</label>
 							<div class="col-sm-10">
 								<div class="radio">
-									<c:choose>
-										<c:when test="${ef.importance == 2}">
-											<label>
-												<input type="radio" name="importance" id="importance3" value="3">★★★
-											</label><br>
-											<label>
-												<input type="radio" name="importance" id="importance2" value="2" checked>★★
-											</label><br>
-											<label>
-												<input type="radio" name="importance" id="importance1" value="1">★
-											</label>
-										</c:when>
-										<c:when test="${ef.importance == 1}">
-											<label>
-												<input type="radio" name="importance" id="importance3" value="3">★★★
-											</label><br>
-											<label>
-												<input type="radio" name="importance" id="importance2" value="2">★★
-											</label><br>
-											<label>
-												<input type="radio" name="importance" id="importance1" value="1" checked>★
-											</label>
-										</c:when>
-										<c:otherwise>
-											<label>
-												<input type="radio" name="importance" id="importance3" value="3" checked>★★★
-											</label><br>
-											<label>
-												<input type="radio" name="importance" id="importance2" value="2">★★
-											</label><br>
-											<label>
-												<input type="radio" name="importance" id="importance1" value="1">★
-											</label>
-										</c:otherwise>
-									</c:choose>
+									<label>
+										<input type="radio" name="importance" id="importance3" value="3" ${HTMLUtils.importanceFormat(ef.importance).equals("★★★") ? "checked" : ""}>★★★
+									</label><br>
+									<label>
+										<input type="radio" name="importance" id="importance2" value="2" ${HTMLUtils.importanceFormat(ef.importance).equals("★★") ? "checked" : ""}>★★
+									</label><br>
+									<label>
+										<input type="radio" name="importance" id="importance1" value="1" ${HTMLUtils.importanceFormat(ef.importance).equals("★") ? "checked" : ""}>★
+									</label>
 								</div>
 							</div>
 						</div><!-- form-group -->

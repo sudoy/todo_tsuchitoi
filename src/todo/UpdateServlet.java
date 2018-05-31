@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import todo.beans.Todo;
 import todo.utils.DBUtils;
 
 @WebServlet("/update.html")
@@ -39,7 +40,12 @@ public class UpdateServlet extends HttpServlet {
 
 			rs.next();
 
-			req.setAttribute("rs", rs);
+			Todo t = new Todo(rs.getInt("id"), rs.getString("title"),
+					rs.getString("detail"), rs.getInt("importance"),
+					rs.getDate("limit_date")
+				);
+
+		req.setAttribute("t", t);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp")
 			.forward(req, resp);

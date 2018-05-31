@@ -11,17 +11,16 @@
 				<li>No.27のリストを更新しました。</li>
 			</ul>
 		</div>
-		<c:if test="${error.equals(\"error\")}">
+		<c:if test="${errorList.size() != 0}">
 			<div class="alert alert-danger alert-dismissible fade in" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
 				<h4>エラーが発生しました！</h4>
 				<ul>
-					<c:if test="${etn.equals(\"題名は必須入力です。\")}"><li>${etn}</li></c:if>
-					<c:if test="${eto.equals(\"題名は100文字以内にして下さい。\")}"><li>${eto}</li></c:if>
-					<c:if test="${ei.equals(\"重要度に不正な入力がされました。\")}"><li>${ei}</li></c:if>
-					<c:if test="${ed.equals(\"期限は「YYYY/MM/DD」形式で入力して下さい。\")}"><li>${ed}</li></c:if>
+					<c:forEach var="list" items="${errorList}">
+						<li>${list}</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</c:if>

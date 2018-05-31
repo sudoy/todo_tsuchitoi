@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +28,8 @@ public class EntryServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		if(validate(req)) {
+		List<String> errorList = new ArrayList<>();
+		if(validate(req, errorList).size() == 0) {
 			Connection con = null;
 			PreparedStatement ps = null;
 			String sql = null;
@@ -62,45 +65,41 @@ public class EntryServlet extends HttpServlet {
 			resp.sendRedirect("index.html");
 		}else {
 
-			req.setAttribute("error", "error");
+			req.setAttribute("errorList", errorList);
 
 			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
 					Integer.parseInt(req.getParameter("importance")), req.getParameter("limit_date"));
 
 			req.setAttribute("ef", ef);
 
+
 			getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
 			.forward(req, resp);
 		}
 	}
 
-	public static boolean validate(HttpServletRequest req) {
+	public static List<String> validate(HttpServletRequest req, List<String> errorList) {
 
-		boolean errorCheck = true;
 		int titleLength = req.getParameter("title").length();
 		if(req.getParameter("title").equals("")) {
-			errorCheck = false;
-			req.setAttribute("etn", "題名は必須入力です。");
+			errorList.add("題名は必須入力です。");
 		}
 		if(titleLength > 100) {
-			errorCheck = false;
-			req.setAttribute("eto", "題名は100文字以内にして下さい。");
+			errorList.add("題名は100文字以内にして下さい。");
 		}
 		if(req.getParameter("importance").equals("1")
 				|| req.getParameter("importance").equals("2")
 				|| req.getParameter("importance").equals("3")) {
 		}else {
-			errorCheck = false;
-			req.setAttribute("ei", "重要度に不正な入力がされました。");
+			errorList.add("重要度に不正な入力がありました。");
 		}
 		if((req.getParameter("limit_date").equals("") == false)) {
 			if((dateCheck(req) == false)) {
-				errorCheck = false;
-				req.setAttribute("ed", "期限は「YYYY/MM/DD」形式で入力して下さい。");
+				errorList.add("期限は「YYYY/MM/DD」形式で入力して下さい。");
 			}
 		}
 
-		return errorCheck;
+		return errorList;
 	}
 
 	public static boolean dateCheck(HttpServletRequest req) {
