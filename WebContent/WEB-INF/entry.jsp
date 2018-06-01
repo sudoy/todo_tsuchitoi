@@ -43,13 +43,13 @@
 							<div class="col-sm-10">
 								<div class="radio">
 									<label>
-										<input type="radio" name="importance" id="importance3" value="3" ${HTMLUtils.importanceFormat(ef.importance).equals("★★★") ? "checked" : ""}>★★★
+										<input type="radio" name="importance" id="importance3" value="3" ${ef.importance == 3 || ef.importance == null ? "checked" : ""}>★★★
 									</label><br>
 									<label>
-										<input type="radio" name="importance" id="importance2" value="2" ${HTMLUtils.importanceFormat(ef.importance).equals("★★") ? "checked" : ""}>★★
+										<input type="radio" name="importance" id="importance2" value="2" ${ef.importance == 2 ? "checked" : ""}>★★
 									</label><br>
 									<label>
-										<input type="radio" name="importance" id="importance1" value="1" ${HTMLUtils.importanceFormat(ef.importance).equals("★") ? "checked" : ""}>★
+										<input type="radio" name="importance" id="importance1" value="1" ${ef.importance == 1 ? "checked" : ""}>★
 									</label>
 								</div>
 							</div>

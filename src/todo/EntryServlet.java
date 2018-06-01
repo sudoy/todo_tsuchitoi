@@ -29,40 +29,7 @@ public class EntryServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		List<String> errorList = new ArrayList<>();
-		if(validate(req, errorList).size() == 0) {
-			Connection con = null;
-			PreparedStatement ps = null;
-			String sql = null;
-
-			try{
-
-				con = DBUtils.getConnection();
-
-				sql = "INSERT INTO todo (title, detail, importance, limit_date) VALUES (?,?,?,?)";
-
-				ps = con.prepareStatement(sql);
-
-				ps.setString(1, req.getParameter("title"));
-				ps.setString(2, req.getParameter("detail"));
-				ps.setString(3, req.getParameter("importance"));
-				if(req.getParameter("limit_date").equals("")) {
-					ps.setString(4, null);
-				}else {
-					ps.setString(4, req.getParameter("limit_date"));
-				}
-
-				ps.executeUpdate();
-			}catch(Exception e){
-				throw new ServletException(e);
-			}finally{
-				try{
-					DBUtils.close(con);
-					DBUtils.close(ps);
-				}catch(Exception e){}
-			}
-			resp.sendRedirect("index.html");
-		}else {
-
+		if(validate(req, errorList).size() > 0) {
 			req.setAttribute("errorList", errorList);
 
 			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
@@ -73,10 +40,44 @@ public class EntryServlet extends HttpServlet {
 
 			getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
 			.forward(req, resp);
+
 		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+
+		try{
+
+			con = DBUtils.getConnection();
+
+			sql = "INSERT INTO todo (title, detail, importance, limit_date) VALUES (?,?,?,?)";
+
+			ps = con.prepareStatement(sql);
+
+			ps.setString(1, req.getParameter("title"));
+			ps.setString(2, req.getParameter("detail"));
+			ps.setString(3, req.getParameter("importance"));
+			if(req.getParameter("limit_date").equals("")) {
+				ps.setString(4, null);
+			}else {
+				ps.setString(4, req.getParameter("limit_date"));
+			}
+
+			ps.executeUpdate();
+		}catch(Exception e){
+			throw new ServletException(e);
+		}finally{
+			try{
+				DBUtils.close(con);
+				DBUtils.close(ps);
+			}catch(Exception e){}
+		}
+		resp.sendRedirect("index.html");
+
 	}
 
-	public static List<String> validate(HttpServletRequest req, List<String> errorList) {
+	private static List<String> validate(HttpServletRequest req, List<String> errorList) {
 
 		int titleLength = req.getParameter("title").length();
 		if(req.getParameter("title").equals("")) {
