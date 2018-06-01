@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import todo.beans.UpdateForm;
 import todo.utils.DBUtils;
@@ -24,6 +25,10 @@ public class UpdateServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
+
+		//sessionをリセット
+		HttpSession session = req.getSession();
+		session.invalidate();
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -77,7 +82,10 @@ public class UpdateServlet extends HttpServlet {
 
 		List<String> errorList = validate(req);
 		if(errorList.size() > 0) {
-			req.setAttribute("errorList", errorList);
+
+			//errorListをsessionに登録
+			HttpSession session = req.getSession();
+			session.setAttribute("errorList", errorList);
 
 			UpdateForm uf = new UpdateForm(req.getParameter("id"), req.getParameter("title"), req.getParameter("detail"),
 					Integer.parseInt(req.getParameter("importance")), req.getParameter("limit_date"));
@@ -126,6 +134,12 @@ public class UpdateServlet extends HttpServlet {
 			}
 		}
 
+		//sessionに登録メッセージを登録し、エラー文を消す。
+		HttpSession session = req.getSession();
+		List<String> success = new ArrayList<>();
+		success.add("更新しました。");
+		session.setAttribute("success", success);
+		session.setAttribute("errorList", null);
 
 		resp.sendRedirect("index.html");
 	}

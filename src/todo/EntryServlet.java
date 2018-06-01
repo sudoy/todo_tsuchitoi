@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import todo.beans.EntryForm;
 import todo.utils.DBUtils;
@@ -21,6 +22,11 @@ import todo.utils.DBUtils;
 public class EntryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		//sessionをリセット
+		HttpSession session = req.getSession();
+		session.invalidate();
+
 		getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
 			.forward(req, resp);
 	}
@@ -30,7 +36,10 @@ public class EntryServlet extends HttpServlet {
 		req.setCharacterEncoding("utf-8");
 		List<String> errorList = validate(req);
 		if(errorList.size() > 0) {
-			req.setAttribute("errorList", errorList);
+
+			//errorListをsessionに登録
+			HttpSession session = req.getSession();
+			session.setAttribute("errorList", errorList);
 
 			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
 					Integer.parseInt(req.getParameter("importance")), req.getParameter("limit_date"));
@@ -74,6 +83,13 @@ public class EntryServlet extends HttpServlet {
 				DBUtils.close(ps);
 			}catch(Exception e){}
 		}
+
+		//sessionに登録メッセージを登録し、エラー文を消す。
+		HttpSession session = req.getSession();
+		List<String> success = new ArrayList<>();
+		success.add("登録しました。");
+		session.setAttribute("success", success);
+		session.setAttribute("errorList", null);
 		resp.sendRedirect("index.html");
 
 	}

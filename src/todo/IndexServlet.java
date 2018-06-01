@@ -29,6 +29,8 @@ public class IndexServlet extends HttpServlet {
 		ResultSet rs = null;
 
 		try{
+
+
 			con = DBUtils.getConnection();
 
 			sql = "select id, title, detail, importance, limit_date from todo order by id";
