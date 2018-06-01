@@ -11,7 +11,7 @@
 				<li>No.27のリストを更新しました。</li>
 			</ul>
 		</div>
-		<c:if test="${errorList.size() != 0}">
+		<c:if test="${errorList != null}">
 			<div class="alert alert-danger alert-dismissible fade in" role="alert">
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true">×</span>

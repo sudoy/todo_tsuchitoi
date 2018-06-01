@@ -60,8 +60,6 @@ public class EntryServlet extends HttpServlet {
 					DBUtils.close(ps);
 				}catch(Exception e){}
 			}
-
-
 			resp.sendRedirect("index.html");
 		}else {
 
