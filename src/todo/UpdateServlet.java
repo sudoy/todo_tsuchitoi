@@ -40,12 +40,12 @@ public class UpdateServlet extends HttpServlet {
 
 			rs.next();
 
-			Todo t = new Todo(rs.getInt("id"), rs.getString("title"),
+			Todo todo = new Todo(rs.getInt("id"), rs.getString("title"),
 					rs.getString("detail"), rs.getInt("importance"),
 					rs.getDate("limit_date")
 				);
 
-		req.setAttribute("t", t);
+		req.setAttribute("todo", todo);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp")
 			.forward(req, resp);
