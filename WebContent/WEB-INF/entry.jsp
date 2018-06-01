@@ -67,7 +67,7 @@
 								<button type="submit" name="add" class="btn btn-primary">追 加</button>
 							</div>
 						</div><!-- form-group -->
-					</form>
+					</form>ef.importance == 2 ? "checked" : ""
 				</div>
 			</div><!-- row -->
 		</div><!-- container -->

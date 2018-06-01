@@ -29,7 +29,7 @@ public class EntryServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		List<String> errorList = new ArrayList<>();
-		if(validate(req, errorList).size() > 0) {
+		if(validate(req).size() > 0) {
 			req.setAttribute("errorList", errorList);
 
 			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
@@ -77,8 +77,8 @@ public class EntryServlet extends HttpServlet {
 
 	}
 
-	private static List<String> validate(HttpServletRequest req, List<String> errorList) {
-
+	private static List<String> validate(HttpServletRequest req) {
+		List<String> errorList = new ArrayList<>();
 		int titleLength = req.getParameter("title").length();
 		if(req.getParameter("title").equals("")) {
 			errorList.add("題名は必須入力です。");
