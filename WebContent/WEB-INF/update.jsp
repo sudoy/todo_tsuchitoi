@@ -65,7 +65,7 @@
 							<div class="col-sm-10">
 								<a href="index.html" class="btn btn-default">キャンセル</a>
 								<input type="submit" name="update" class="btn btn-primary" value="更 新">
-								<input type="submit" name="delete" class="btn btn-danger pull-right" value="削 除">
+								<a href="delete.html?id=${uf.id}" class="btn btn-danger pull-right" >削 除</a>
 							</div>
 						</div><!-- form-group -->
 					</form>

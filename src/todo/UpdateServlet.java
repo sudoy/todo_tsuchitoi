@@ -98,32 +98,19 @@ public class UpdateServlet extends HttpServlet {
 		try {
 			con = DBUtils.getConnection();
 
-			if(req.getParameter("update") != null){
-				sql = "UPDATE todo SET title = ?, detail = ?, importance = ?, limit_date = ? where id = ?";
+			sql = "UPDATE todo SET title = ?, detail = ?, importance = ?, limit_date = ? where id = ?";
 
-				ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql);
 
-				ps.setString(1, req.getParameter("title"));
-				ps.setString(2, req.getParameter("detail"));
-				ps.setString(3, req.getParameter("importance"));
-				if(req.getParameter("limit_date").equals("")) {
-					ps.setString(4, null);
-				}else {
-					ps.setString(4, req.getParameter("limit_date"));
-				}
-				ps.setString(5, req.getParameter("id"));
-
-
-			}else{
-				//sql作る
-				sql = "DELETE FROM todo where id = ?";
-
-				//準備
-				ps = con.prepareStatement(sql);
-
-				//ポストデータをセット
-				ps.setString(1, req.getParameter("id"));
+			ps.setString(1, req.getParameter("title"));
+			ps.setString(2, req.getParameter("detail"));
+			ps.setString(3, req.getParameter("importance"));
+			if(req.getParameter("limit_date").equals("")) {
+				ps.setString(4, null);
+			}else {
+				ps.setString(4, req.getParameter("limit_date"));
 			}
+			ps.setString(5, req.getParameter("id"));
 
 			ps.executeUpdate();
 
