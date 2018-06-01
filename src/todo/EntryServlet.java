@@ -28,8 +28,8 @@ public class EntryServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		List<String> errorList = new ArrayList<>();
-		if(validate(req).size() > 0) {
+		List<String> errorList = validate(req);
+		if(errorList.size() > 0) {
 			req.setAttribute("errorList", errorList);
 
 			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
