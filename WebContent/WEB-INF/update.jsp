@@ -57,7 +57,7 @@
 						<div class="form-group">
 							<label for="limit" class="col-sm-2 control-label">期限</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="${HTMLUtils.ufDateFormat(uf.limitDate)}">
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="${uf.limitDate}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">

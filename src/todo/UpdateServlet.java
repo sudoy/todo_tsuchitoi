@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import todo.beans.UpdateForm;
 import todo.utils.DBUtils;
+import todo.utils.HTMLUtils;
 
 @WebServlet("/update.html")
 public class UpdateServlet extends HttpServlet {
@@ -45,7 +46,7 @@ public class UpdateServlet extends HttpServlet {
 
 			UpdateForm uf = new UpdateForm(rs.getString("id"), rs.getString("title"),
 					rs.getString("detail"), rs.getInt("importance"),
-					rs.getString("limit_date")
+					HTMLUtils.ufDateFormat(rs.getString("limit_date"))
 				);
 
 			req.setAttribute("uf", uf);
@@ -105,7 +106,11 @@ public class UpdateServlet extends HttpServlet {
 				ps.setString(1, req.getParameter("title"));
 				ps.setString(2, req.getParameter("detail"));
 				ps.setString(3, req.getParameter("importance"));
-				ps.setString(4, req.getParameter("limit_date"));
+				if(req.getParameter("limit_date").equals("")) {
+					ps.setString(4, null);
+				}else {
+					ps.setString(4, req.getParameter("limit_date"));
+				}
 				ps.setString(5, req.getParameter("id"));
 
 
