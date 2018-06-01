@@ -54,7 +54,7 @@ public class DeleteServlet extends HttpServlet {
 		//sessionに更新メッセージを登録
 		HttpSession session = req.getSession();
 		List<String> success = new ArrayList<>();
-		success.add("更新しました。");
+		success.add("削除しました。");
 		session.setAttribute("success", success);
 
 
