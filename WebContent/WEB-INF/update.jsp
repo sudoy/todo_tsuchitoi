@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="todo.utils.HTMLUtils" %>
+<%@ page import="todo.utils.HTMLUtils, javax.servlet.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -25,17 +25,17 @@
 			</div><!-- row -->
 			<div class="row">
 				<div class="col-sm-offset-1 col-sm-10">
-					<form class="form-horizontal" action="update.html?id=${todo.id}" method="post">
+					<form class="form-horizontal" action="update.html?id=${uf.id}" method="post">
 						<div class="form-group">
 							<label for="title" class="col-sm-2 control-label">題名</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="${todo.title}">
+								<input type="text" class="form-control" id="title" name="title" placeholder="題名" value="${uf.title}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
 							<label for="detail" class="col-sm-2 control-label">詳細</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細">${todo.detail}</textarea>
+								<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="詳細">${uf.detail}</textarea>
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">
@@ -43,13 +43,13 @@
 							<div class="col-sm-10">
 								<div class="radio">
 									<label>
-										<input type="radio" name="importance" id="importance3" value="3" ${todo.importance == 3 ? "checked" : ""}>★★★
+										<input type="radio" name="importance" id="importance3" value="3" ${uf.importance == 3 ? "checked" : ""}>★★★
 									</label><br>
 									<label>
-										<input type="radio" name="importance" id="importance2" value="2" ${todo.importance == 2 ? "checked" : ""}>★★
+										<input type="radio" name="importance" id="importance2" value="2" ${uf.importance == 2 ? "checked" : ""}>★★
 									</label><br>
 									<label>
-										<input type="radio" name="importance" id="importance1" value="1" ${todo.importance == 1 ? "checked" : ""}>★
+										<input type="radio" name="importance" id="importance1" value="1" ${uf.importance == 1 ? "checked" : ""}>★
 									</label>
 								</div>
 							</div>
@@ -57,7 +57,7 @@
 						<div class="form-group">
 							<label for="limit" class="col-sm-2 control-label">期限</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="${HTMLUtils.dateFormat(todo.limitDate)}">
+								<input type="text" class="form-control" id="limit_date" name="limit_date" placeholder="期限" value="${HTMLUtils.ufDateFormat(uf.limitDate)}">
 							</div>
 						</div><!-- form-group -->
 						<div class="form-group">

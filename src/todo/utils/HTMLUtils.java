@@ -23,4 +23,9 @@ public class HTMLUtils {
 
 		return s;
 	}
+
+	public static String ufDateFormat(String limitDate) {
+		return limitDate.replace("-", "/");
+	}
+
 }

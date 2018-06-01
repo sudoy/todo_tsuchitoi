@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import todo.beans.Todo;
+import todo.beans.UpdateForm;
 import todo.utils.DBUtils;
 
 @WebServlet("/update.html")
@@ -40,12 +43,12 @@ public class UpdateServlet extends HttpServlet {
 
 			rs.next();
 
-			Todo todo = new Todo(rs.getInt("id"), rs.getString("title"),
+			UpdateForm uf = new UpdateForm(rs.getString("id"), rs.getString("title"),
 					rs.getString("detail"), rs.getInt("importance"),
-					rs.getDate("limit_date")
+					rs.getString("limit_date")
 				);
 
-		req.setAttribute("todo", todo);
+			req.setAttribute("uf", uf);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp")
 			.forward(req, resp);
@@ -69,6 +72,24 @@ public class UpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		req.setCharacterEncoding("utf-8");
+
+
+		List<String> errorList = validate(req);
+		if(errorList.size() > 0) {
+			req.setAttribute("errorList", errorList);
+
+			UpdateForm uf = new UpdateForm(req.getParameter("id"), req.getParameter("title"), req.getParameter("detail"),
+					Integer.parseInt(req.getParameter("importance")), req.getParameter("limit_date"));
+
+			req.setAttribute("uf", uf);
+
+
+			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp")
+			.forward(req, resp);
+			return;
+
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		String sql = null;
@@ -87,7 +108,6 @@ public class UpdateServlet extends HttpServlet {
 				ps.setString(4, req.getParameter("limit_date"));
 				ps.setString(5, req.getParameter("id"));
 
-				System.out.println(req.getParameter("id"));
 
 			}else{
 				//sql作る
@@ -117,4 +137,50 @@ public class UpdateServlet extends HttpServlet {
 
 		resp.sendRedirect("index.html");
 	}
+
+	private static List<String> validate(HttpServletRequest req) {
+		List<String> errorList = new ArrayList<>();
+		int titleLength = req.getParameter("title").length();
+
+		if(req.getParameter("id").equals("")) {
+			errorList.add("idに不正な入力がありました。");
+		}
+
+		if(req.getParameter("title").equals("")) {
+			errorList.add("題名は必須入力です。");
+		}
+		if(titleLength > 100) {
+			errorList.add("題名は100文字以内にして下さい。");
+		}
+		if(req.getParameter("importance").equals("1")
+				|| req.getParameter("importance").equals("2")
+				|| req.getParameter("importance").equals("3")) {
+		}else {
+			errorList.add("重要度に不正な入力がありました。");
+		}
+		if((req.getParameter("limit_date").equals("") == false)) {
+			if((dateCheck(req) == false)) {
+				errorList.add("期限は「YYYY/MM/DD」形式で入力して下さい。");
+			}
+		}
+
+		return errorList;
+	}
+
+	public static boolean dateCheck(HttpServletRequest req) {
+		String value = req.getParameter("limit_date");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		df.setLenient(false);
+		java.util.Date parsedDate = null;
+		boolean dateCheck = true;
+		try {
+			parsedDate =  df.parse(value);
+			dateCheck = df.format(parsedDate).equals(value);
+		} catch (Exception e) {
+			dateCheck = false;
+		}
+		return dateCheck;
+
+	}
+
 }

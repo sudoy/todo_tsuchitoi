@@ -40,6 +40,7 @@ public class EntryServlet extends HttpServlet {
 
 			getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
 			.forward(req, resp);
+			return;
 
 		}
 
