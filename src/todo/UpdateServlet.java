@@ -28,7 +28,7 @@ public class UpdateServlet extends HttpServlet {
 
 		//sessionをリセット
 		HttpSession session = req.getSession();
-		session.invalidate();
+		session.setAttribute("success", null);
 
 		Connection con = null;
 		PreparedStatement ps = null;

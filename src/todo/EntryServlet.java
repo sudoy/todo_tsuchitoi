@@ -25,7 +25,7 @@ public class EntryServlet extends HttpServlet {
 
 		//sessionをリセット
 		HttpSession session = req.getSession();
-		session.invalidate();
+		session.setAttribute("success", null);
 
 		getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
 			.forward(req, resp);
