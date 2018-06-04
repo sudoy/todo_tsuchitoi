@@ -84,12 +84,19 @@ public class UpdateServlet extends HttpServlet {
 
 		req.setCharacterEncoding("utf-8");
 
+		HttpSession session = req.getSession();
+		if(session.getAttribute("login") == null) {
+			session.setAttribute("errorList", "ログインしてください。");
+			resp.sendRedirect("login.html");
+			return;
+		}
+
+
 
 		List<String> errorList = validate(req);
 		if(errorList.size() > 0) {
 
 			//errorListをsessionに登録
-			HttpSession session = req.getSession();
 			session.setAttribute("errorList", errorList);
 
 			UpdateForm uf = new UpdateForm(req.getParameter("id"), req.getParameter("title"), req.getParameter("detail"),
@@ -140,7 +147,6 @@ public class UpdateServlet extends HttpServlet {
 		}
 
 		//sessionに登録メッセージを登録し、エラー文を消す。
-		HttpSession session = req.getSession();
 		List<String> success = new ArrayList<>();
 		success.add("更新しました。");
 		session.setAttribute("success", success);

@@ -39,11 +39,19 @@ public class EntryServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
+
+		HttpSession session = req.getSession();
+		if(session.getAttribute("login") == null) {
+			session.setAttribute("errorList", "ログインしてください。");
+			resp.sendRedirect("login.html");
+			return;
+		}
+
+
 		List<String> errorList = validate(req);
 		if(errorList.size() > 0) {
 
 			//errorListをsessionに登録
-			HttpSession session = req.getSession();
 			session.setAttribute("errorList", errorList);
 
 			EntryForm ef = new EntryForm(null, req.getParameter("title"), req.getParameter("detail"),
@@ -90,7 +98,6 @@ public class EntryServlet extends HttpServlet {
 		}
 
 		//sessionに登録メッセージを登録し、エラー文を消す。
-		HttpSession session = req.getSession();
 		List<String> success = new ArrayList<>();
 		success.add("登録しました。");
 		session.setAttribute("success", success);

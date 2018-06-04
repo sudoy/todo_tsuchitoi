@@ -20,7 +20,11 @@
 				<div class="row">
 					<div class="text-left col-sm-5"><h4 style="margin-bottom: 40px;">ログイン</h4></div>
 				</div>
+
+				<jsp:include page="success.jsp" />
+
 				<jsp:include page="error.jsp" />
+
 				<form class="form-horizontal" action="login.html" method="post">
 					<div class="form-group">
 						<label for="email" class="col-sm-4 control-label">メールアドレス</label>

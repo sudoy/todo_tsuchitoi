@@ -22,6 +22,14 @@ public class DeleteServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		HttpSession session = req.getSession();
+		if(session.getAttribute("login") == null) {
+			session.setAttribute("errorList", "ログインしてください。");
+			resp.sendRedirect("login.html");
+			return;
+		}
+
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		String sql = null;
@@ -52,7 +60,6 @@ public class DeleteServlet extends HttpServlet {
 		}
 
 		//sessionに更新メッセージを登録
-		HttpSession session = req.getSession();
 		List<String> success = new ArrayList<>();
 		success.add("削除しました。");
 		session.setAttribute("success", success);
