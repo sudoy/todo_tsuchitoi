@@ -23,9 +23,14 @@ public class EntryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		//sessionをリセット
 		HttpSession session = req.getSession();
-		session.setAttribute("success", null);
+
+		if(session.getAttribute("login") == null) {
+			session.setAttribute("errorList", "ログインしてください。");
+			resp.sendRedirect("login.html");
+			return;
+		}
+
 
 		getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp")
 			.forward(req, resp);
@@ -89,7 +94,6 @@ public class EntryServlet extends HttpServlet {
 		List<String> success = new ArrayList<>();
 		success.add("登録しました。");
 		session.setAttribute("success", success);
-		session.setAttribute("errorList", null);
 		resp.sendRedirect("index.html");
 
 	}

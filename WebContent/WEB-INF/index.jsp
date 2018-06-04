@@ -17,6 +17,8 @@
 
 		<div class="container-fluid">
 
+			<jsp:include page="success.jsp" />
+
 			<%-- error文のinclude --%>
 			<jsp:include page="error.jsp" />
 

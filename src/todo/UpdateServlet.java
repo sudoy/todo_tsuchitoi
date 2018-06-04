@@ -26,9 +26,14 @@ public class UpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 
-		//sessionをリセット
 		HttpSession session = req.getSession();
-		session.setAttribute("success", null);
+
+		if(session.getAttribute("login") == null) {
+			session.setAttribute("errorList", "ログインしてください。");
+			resp.sendRedirect("login.html");
+			return;
+		}
+
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -139,7 +144,6 @@ public class UpdateServlet extends HttpServlet {
 		List<String> success = new ArrayList<>();
 		success.add("更新しました。");
 		session.setAttribute("success", success);
-		session.setAttribute("errorList", null);
 
 		resp.sendRedirect("index.html");
 	}
