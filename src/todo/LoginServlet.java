@@ -29,8 +29,8 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		HttpSession sessionL = req.getSession();
-		sessionL.invalidate();
+		HttpSession session = req.getSession();
+		session.setAttribute("success", null);
 
 		req.setCharacterEncoding("utf-8");
 		Connection con = null;
@@ -43,7 +43,7 @@ public class LoginServlet extends HttpServlet {
 
 			con = DBUtils.getConnection();
 
-			sql = "select login_id, user, email, password from login where email=? and password=?";
+			sql = "select login_id, user, email, password from login where email=? and password=MD5(?)";
 
 			ps = con.prepareStatement(sql);
 
@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 			}
 			Login login = new Login(rs.getInt("login_id"), rs.getString("user"),
 					rs.getString("email"), rs.getString("password"));
-			HttpSession session = req.getSession();
+
 			session.setAttribute("login", login);
 			resp.sendRedirect("index.html");
 		}catch(Exception e){
